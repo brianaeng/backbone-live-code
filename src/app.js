@@ -2,6 +2,7 @@ import Backbone from 'backbone';
 import $ from 'jquery';
 import _ from 'underscore';
 import TaskListView from 'app/views/task_list_view';
+import TaskList from 'app/collections/task_list';
 
 var taskData = [
   {
@@ -17,9 +18,11 @@ var taskData = [
 ];
 
 $(document).ready(function() {
+  var taskList = new TaskList(taskData);
+
   var application = new TaskListView({
     el: $('#application'), //setting the el as 'this' when 'this' is referenced in TaskListView
-    taskData: taskData
+    model: taskList
   });
   application.render();
 });

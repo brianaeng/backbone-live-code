@@ -20,6 +20,9 @@ var TaskView = Backbone.View.extend({
     // html += '<p>' + this.task.description + '</p>';
     // html += '</li>';
 
+    //reconnects DOM event handlers
+    this.delegateEvents();
+
     var html = this.template({task: this.model.toJSON()});
 
     //OR THIS (but it bypasses validations/events)
@@ -31,11 +34,15 @@ var TaskView = Backbone.View.extend({
     return this;
   },
   events: {
-    'click .complete-button': 'completeHandler'
+    'click .complete-button': 'completeHandler',
+    'click .delete-button': 'deleteTask'
   },
   completeHandler: function(event){
     this.model.toggleComplete();
     // this.render();
+  },
+  deleteTask: function(event){
+    this.model.destroy();
   }
 });
 
