@@ -6,8 +6,50 @@
   <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
-  <div id="test-area">
-  </div>
+  <!-- <main class="row" id="application">
+    <section class="small-12 columns">
+      <h1>Task List</h1>
+    </section>
+
+    <ul class="task-list small-12 large-6 columns end">
+    </ul>
+  </main> -->
+  <main id="application" class="row">
+    <section class="small-12 columns">
+      <h1>Task List</h1>
+
+      <form class="row new-task">
+        <div class="small-12 large-4 columns">
+          <label for="title">Title</label>
+          <input type="text" name="title"></input>
+        </div>
+        <div class="small-12 large-4 columns">
+          <label for="description">Description</label>
+          <input type="text" name="description"></input>
+        </div>
+        <div class="small-12 large-4 columns">
+          <!-- Placeholder for vertical alignment -->
+          <label class="show-for-large">&nbsp;</label>
+          <button type="submit" class="success button">Add Task</button>
+          <button type="button" class="warning button clear-button">Clear</button>
+        </div>
+      </form>
+    </section>
+
+    <ul class="task-list small-12 large-6 columns end">
+    </ul>
+  </main>
+
+  <script type="text/template" id="task-template">
+    <li class="task">
+      <h2>
+        <%- task.title %>
+      </h2>
+      <p>
+        <%-task.description %>
+      </p>
+    </li>
+  </script>
 
   <script src="/app.bundle.js" charset="utf-8"></script>
 </body>
