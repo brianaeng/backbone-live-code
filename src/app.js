@@ -18,7 +18,7 @@ var taskData = [
 
 $(document).ready(function() {
   var application = new TaskListView({
-    el: $('#application'),
+    el: $('#application'), //setting the el as 'this' when 'this' is referenced in TaskListView
     taskData: taskData
   });
   application.render();

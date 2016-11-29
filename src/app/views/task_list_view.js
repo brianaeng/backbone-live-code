@@ -1,3 +1,4 @@
+import Task from 'app/models/task';
 import TaskView from 'app/views/task_view';
 import _ from 'underscore';
 import $ from 'jquery';
@@ -6,22 +7,19 @@ import Backbone from 'backbone';
 var TaskListView = Backbone.View.extend({
   initialize: function(options) {
     // Store a the full list of tasks
-    this.taskData = options.taskData;
+    // this.taskData = options.taskData;
+    this.modelList = [];
 
     // Compile a template to be shared between the individual tasks
     this.taskTemplate = _.template($('#task-template').html());
 
-    // Keep track of the <ul> element
+    // Keep track of the <ul> element - this is using el indirectly
     this.listElement = this.$('.task-list');
 
     // Create a TaskView for each task
     this.cardList = [];
-    this.taskData.forEach(function(task) {
-      var card = new TaskView({
-        task: task,
-        template: this.taskTemplate
-      });
-      this.cardList.push(card);
+    options.taskData.forEach(function(task) {
+      this.addTask(task);
     }, this); // bind `this` so it's available inside forEach
 
     this.input = {
@@ -62,14 +60,7 @@ var TaskListView = Backbone.View.extend({
     var task = this.getInput();
 
     // Add the new task to our list of tasks
-    this.taskData.push(task);
-
-    // Create a card for the new task, and add it to our card list
-    var card = new TaskView({
-      task: task,
-      template: this.taskTemplate
-    });
-    this.cardList.push(card);
+    this.addTask(task);
 
     // Re-render the whole list, now including the new card
     this.render();
@@ -84,6 +75,13 @@ var TaskListView = Backbone.View.extend({
       description: this.input.description.val()
     };
     return task;
+  },
+  addTask: function(rawTask) {
+    var task = new Task(rawTask);
+    this.modelList.push(task);
+    //views know what to do with models built-in
+    var card = new TaskView({model: task, template: this.taskTemplate});
+    this.cardList.push(card);
   }
 });
 
