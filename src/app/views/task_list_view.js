@@ -86,6 +86,8 @@ var TaskListView = Backbone.View.extend({
     // this.modelList.push(task);
     //views know what to do with models built-in
     var card = new TaskView({model: task, template: this.taskTemplate});
+    //Listening to the card, when it says "editMe" then call the editCard function on this card
+    this.listenTo(card, "editMe", this.editCard);
     this.cardList.push(card);
   },
   removeTask: function(model, collection, options){
@@ -99,6 +101,13 @@ var TaskListView = Backbone.View.extend({
       }
     }
     this.cardList = filteredList;
+  },
+  editCard: function(cardModel){
+    this.input.title.val(cardModel.get("title"));
+    this.input.description.val(cardModel.get("description"));
+
+    //gets card list collection & removes the card
+    this.model.remove(cardModel);
   }
 });
 

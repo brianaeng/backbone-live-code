@@ -35,7 +35,8 @@ var TaskView = Backbone.View.extend({
   },
   events: {
     'click .complete-button': 'completeHandler',
-    'click .delete-button': 'deleteTask'
+    'click .delete-button': 'deleteTask',
+    'click div': 'editTask'
   },
   completeHandler: function(event){
     this.model.toggleComplete();
@@ -43,6 +44,10 @@ var TaskView = Backbone.View.extend({
   },
   deleteTask: function(event){
     this.model.destroy();
+  },
+  editTask: function(event){
+    console.log("clicked task");
+    this.trigger("editMe", this.model);
   }
 });
 
